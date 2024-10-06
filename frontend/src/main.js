@@ -66,6 +66,7 @@ app.component('ImagePreview', ImagePreview)
 app.component('RightToolbar', RightToolbar)
 app.component('Editor', Editor)
 
+// 使用路由来指定页面显示
 app.use(router)
 app.use(store)
 app.use(plugins)

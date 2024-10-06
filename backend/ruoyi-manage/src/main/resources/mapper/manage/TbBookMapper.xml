@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+<!--    多模式匹配(4个if), 参数从vue.js中获取-->
     <select id="selectTbBookVoList" parameterType="TbBook" resultType="com.ruoyi.manage.domain.vo.TbBookVo">
         select b.id, b.book_name, b.author, b.publisher, b.publish_date, b.price, b.quantity, b.region_id, b.category_id, b.create_time, b.update_time, b.create_by, b.update_by, b.remark,
         c.category_name, r.region_name from tb_book b
@@ -48,7 +49,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="categoryId != null "> and b.category_id = #{categoryId}</if>
         </where>
     </select>
-    
+
+<!--    传递参数到 refid-->
     <select id="selectTbBookById" parameterType="Long" resultMap="TbBookResult">
         <include refid="selectTbBookVo"/>
         where id = #{id}

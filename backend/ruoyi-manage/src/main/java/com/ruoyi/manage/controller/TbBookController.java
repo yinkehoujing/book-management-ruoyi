@@ -38,6 +38,7 @@ public class TbBookController extends BaseController
 
     /**
      * 查询书籍管理列表
+     * param: tbBook 满足它所表达的条件
      */
     @PreAuthorize("@ss.hasPermi('manage:book:list')")
     @GetMapping("/list")

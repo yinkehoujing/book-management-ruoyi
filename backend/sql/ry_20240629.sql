@@ -162,7 +162,13 @@ insert into sys_menu values('1', '系统管理', '0', '1', 'system',           n
 insert into sys_menu values('2', '系统监控', '0', '2', 'monitor',          null, '', '', 1, 0, 'M', '0', '0', '', 'monitor',  'admin', sysdate(), '', null, '系统监控目录');
 insert into sys_menu values('3', '系统工具', '0', '3', 'tool',             null, '', '', 1, 0, 'M', '0', '0', '', 'tool',     'admin', sysdate(), '', null, '系统工具目录');
 insert into sys_menu values('4', '若依官网', '0', '4', 'http://ruoyi.vip', null, '', '', 0, 0, 'M', '0', '0', '', 'guide',    'admin', sysdate(), '', null, '若依官网地址');
+-- Grl
+insert into sys_menu values('5', '图书管理', '0', '5', 'manage',           null, '', '', 1, 0, 'M', '0', '0', '', 'system',   'admin', sysdate(), '', null, '图书管理目录');
 -- 二级菜单
+
+insert into sys_menu values ('1061', '书籍管理', '5',   '1', 'book',       'manage/book/index',        '', '', 1, 0, 'C', '0', '0', 'manage:book:list',        'book',          'admin', sysdate(), '', null, '书籍管理菜单');
+insert into sys_menu values ('1062', '区域管理', '5', '2', 'region',       'manage/region/index',       '', '', 1, 0, 'C', '0', '0', 'manage:region:list',       'region',        'admin', sysdate(), '', null, '区域管理菜单');
+insert into sys_menu values ('1063', '类别管理', '5', '3', 'category',     'manage/category/index',     '', '', 1, 0, 'C', '0', '0', 'manage:category:list',     'category',      'admin', sysdate(), '', null, '类别管理菜单');
 insert into sys_menu values('100',  '用户管理', '1',   '1', 'user',       'system/user/index',        '', '', 1, 0, 'C', '0', '0', 'system:user:list',        'user',          'admin', sysdate(), '', null, '用户管理菜单');
 insert into sys_menu values('101',  '角色管理', '1',   '2', 'role',       'system/role/index',        '', '', 1, 0, 'C', '0', '0', 'system:role:list',        'peoples',       'admin', sysdate(), '', null, '角色管理菜单');
 insert into sys_menu values('102',  '菜单管理', '1',   '3', 'menu',       'system/menu/index',        '', '', 1, 0, 'C', '0', '0', 'system:menu:list',        'tree-table',    'admin', sysdate(), '', null, '菜单管理菜单');
@@ -699,3 +705,64 @@ create table gen_table_column (
   update_time       datetime                                   comment '更新时间',
   primary key (column_id)
 ) engine=innodb auto_increment=1 comment = '代码生成业务表字段';
+
+-- ----------------------------
+-- Create tb_region table
+CREATE TABLE tb_region (
+                           id INT AUTO_INCREMENT PRIMARY KEY COMMENT '区域ID',
+                           region_name VARCHAR(255) NOT NULL COMMENT '区域名称',
+                           create_time DATE COMMENT '创建时间',
+                           update_time DATE COMMENT '更新时间',
+                           create_by VARCHAR(50) COMMENT '创建人',
+                           update_by VARCHAR(50) COMMENT '更新人',
+                           remark TEXT COMMENT '备注'
+);
+
+-- Create tb_category table
+CREATE TABLE tb_category (
+                             id INT AUTO_INCREMENT PRIMARY KEY COMMENT '类别ID',
+                             category_name VARCHAR(255) NOT NULL COMMENT '类别名称',
+                             create_time DATE COMMENT '创建时间',
+                             update_time DATE COMMENT '更新时间',
+                             create_by VARCHAR(50) COMMENT '创建人',
+                             update_by VARCHAR(50) COMMENT '更新人',
+                             remark TEXT COMMENT '备注'
+);
+
+-- Create tb_book table
+CREATE TABLE tb_book (
+                         id INT AUTO_INCREMENT PRIMARY KEY COMMENT '书籍ID',
+                         book_name VARCHAR(255) NOT NULL COMMENT '书籍名称',
+                         cover VARCHAR(255) COMMENT '封面',
+                         author VARCHAR(255) COMMENT '作者',
+                         publisher VARCHAR(255) COMMENT '出版社',
+                         publish_date DATE COMMENT '出版日期',
+                         price DECIMAL(10, 2) COMMENT '价格',
+                         quantity INT COMMENT '数量',
+                         region_id INT COMMENT '区域ID',
+                         category_id INT COMMENT '类别ID',
+                         create_time DATE COMMENT '创建时间',
+                         update_time DATE COMMENT '更新时间',
+                         create_by VARCHAR(50) COMMENT '创建人',
+                         update_by VARCHAR(50) COMMENT '更新人',
+                         remark TEXT COMMENT '备注',
+                         FOREIGN KEY (region_id) REFERENCES tb_region(id) ON DELETE CASCADE,
+                         FOREIGN KEY (category_id) REFERENCES tb_category(id) ON DELETE CASCADE
+);
+
+-- Insert test data into tb_region
+INSERT INTO tb_region (region_name, create_time, create_by) VALUES
+                                                                ('华东', CURDATE(), 'admin'),
+                                                                ('华南', CURDATE(), 'admin');
+
+-- Insert test data into tb_category
+INSERT INTO tb_category (category_name, create_time, create_by) VALUES
+                                                                    ('小说', CURDATE(), 'admin'),
+                                                                    ('科技', CURDATE(), 'admin');
+
+-- Insert test data into tb_book
+INSERT INTO tb_book (book_name, cover, author, publisher, publish_date, price, quantity, region_id, category_id, create_time, create_by) VALUES
+                                                                                                                                             ('书籍一', 'cover1.jpg', '作者一', '出版社一', '2024-01-01', 39.90, 10, 1, 1, CURDATE(), 'admin'),
+                                                                                                                                             ('书籍二', 'cover2.jpg', '作者二', '出版社二', '2024-02-01', 59.90, 5, 2, 2, CURDATE(), 'admin');
+
+DELETE FROM sys_menu WHERE menu_id = 4;

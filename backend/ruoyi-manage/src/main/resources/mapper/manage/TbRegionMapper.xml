@@ -3,7 +3,8 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.manage.mapper.TbRegionMapper">
-    
+
+<!--    定义TbRegion对象到数据库表的映射关系-->
     <resultMap type="TbRegion" id="TbRegionResult">
         <result property="id"    column="id"    />
         <result property="regionName"    column="region_name"    />
@@ -14,6 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remark"    column="remark"    />
     </resultMap>
 
+<!--    可重用sql片段-->
     <sql id="selectTbRegionVo">
         select id, region_name, create_time, update_time, create_by, update_by, remark from tb_region
     </sql>
@@ -67,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         delete from tb_region where id = #{id}
     </delete>
 
+<!--    通过不同的参数类型来指定不同的删除方式-->
     <delete id="deleteTbRegionByIds" parameterType="String">
         delete from tb_region where id in 
         <foreach item="id" collection="array" open="(" separator="," close=")">

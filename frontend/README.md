@@ -29,6 +29,8 @@ cd RuoYi-Vue3
 # 安装依赖
 yarn --registry=https://registry.npmmirror.com
 
+# npm install from package.json
+
 # 启动服务
 yarn dev
 

@@ -81,6 +81,7 @@
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
+<!--    data绑定到一个响应式变量上-->
     <el-table v-loading="loading" :data="bookList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="序号" type="index" align="center" prop="id" />
@@ -214,6 +215,8 @@ const data = reactive({
 const { queryParams, form, rules } = toRefs(data);
 
 /** 查询书籍管理列表 */
+// html -> controller -> response -> function -> js
+// response 从后端获取
 function getList() {
   loading.value = true;
   listBook(queryParams.value).then(response => {
